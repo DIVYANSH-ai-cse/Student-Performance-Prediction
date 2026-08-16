@@ -1,55 +1,96 @@
-# Student-Performance-Prediction
-# 🎓 AI-Driven Student Performance Prediction System
+# AI-Driven Student Performance Prediction System
 
-A web app that predicts a student's final academic score using a machine
-learning model, built with **Python 3.14**, **Flask**, **scikit-learn**,
-**HTML**, and **CSS**.
+A web application that predicts a student's final academic score using a
+machine-learning model (Random Forest Regression), built with **Python 3.14**,
+**Flask**, **scikit-learn**, **HTML**, and **CSS**.
 
-## What It Does
+## Features
 
-Takes inputs like study hours, attendance, previous scores, assignments
-completed, sleep hours, extracurricular activity, parental support, and
-internet access — and predicts:
-- Final score (0–100)
-- Letter grade (A+ to F)
-- Pass/Fail status
-
-## Tech Stack
-
-- **Backend:** Python 3.14, Flask
-- **ML:** scikit-learn (Random Forest Regressor), pandas, NumPy, joblib
-- **Frontend:** HTML5, CSS3 (Jinja2 templates)
+- Synthetic dataset generator for student academic/lifestyle data
+- Random Forest Regression model (scikit-learn) with feature scaling
+- Flask web app with a form to enter student details
+- Instant prediction of final score, letter grade (A+ to F), and Pass/Fail status
+- Feature-importance chart generated during training
+- Clean, responsive HTML/CSS interface (no external CSS frameworks needed)
 
 ## Project Structure
-├── app.py # Flask app (routes + prediction logic)
-├── train_model.py # Trains and saves the ML model
-├── generate_dataset.py # Generates synthetic training data
-├── requirements.txt
-├── data/ # Dataset (CSV)
-├── model/ # Trained model + scaler (.pkl)
-├── static/ # CSS + charts
-└── templates/ # HTML pages
-## How to Run
 
-```bash
-python -m venv venv
-source venv/bin/activate      # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-python app.py
+```
+student_performance_predictor/
+│
+├── app.py                     # Flask application (routes, prediction logic)
+├── train_model.py             # Trains and saves the ML model
+├── generate_dataset.py        # Generates the synthetic training dataset
+├── requirements.txt           # Python dependencies
+├── README.md
+│
+├── data/
+│   └── student_data.csv       # Generated dataset (created on first run)
+│
+├── model/
+│   ├── student_model.pkl      # Trained model (created by train_model.py)
+│   └── scaler.pkl             # Fitted StandardScaler
+│
+├── static/
+│   ├── style.css               # App styling
+│   └── feature_importance.png  # Chart generated during training
+│
+└── templates/
+    ├── base.html               # Shared layout
+    ├── index.html              # Input form (home page)
+    ├── result.html             # Prediction result page
+    └── about.html              # About / how-it-works page
 ```
 
-Open **http://127.0.0.1:5000** in your browser.
+## Setup & Run (Python 3.14)
 
-## Model Performance
+1. **Create and activate a virtual environment** (recommended):
 
-Trained on synthetic data (1,500 records) using a Random Forest Regressor:
-- MAE: ~4.3
-- RMSE: ~5.3
-- R²: ~0.55
+   ```bash
+   python3.14 -m venv venv
+   source venv/bin/activate        # Windows: venv\Scripts\activate
+   ```
 
-## Future Scope
+2. **Install dependencies:**
 
-- Train on real student data
-- Add risk-level classification (High/Medium/Low)
-- Add database + login for teachers/admins
-- Deploy to cloud
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **(Optional) Generate the dataset and train the model manually.**
+   If you skip this step, `app.py` will do it automatically on first run.
+
+   ```bash
+   python generate_dataset.py
+   python train_model.py
+   ```
+
+4. **Run the web app:**
+
+   ```bash
+   python app.py
+   ```
+
+5. Open your browser at **http://127.0.0.1:5000**
+
+## How It Works
+
+1. `generate_dataset.py` creates 1,500 synthetic student records with features:
+   study hours, attendance, previous scores, assignments completed, sleep
+   hours, extracurricular participation, parental support, and internet access.
+2. `train_model.py` scales the features with `StandardScaler`, trains a
+   `RandomForestRegressor` to predict `final_score` (0–100), evaluates it
+   (MAE, RMSE, R²), and saves the model + scaler with `joblib`.
+3. `app.py` loads the saved model/scaler and serves:
+   - `GET /` — the input form
+   - `POST /predict` — runs the prediction and renders the result page
+   - `GET /about` — project explanation page
+
+## Notes
+
+- The dataset is synthetic (randomly generated with realistic relationships)
+  for demonstration purposes. To use real data, replace `data/student_data.csv`
+  with your own dataset that has the same column names, then re-run
+  `train_model.py`.
+- Model performance (R² ≈ 0.55 on synthetic data) will vary depending on the
+  random seed and the strength of relationships in real-world data.
