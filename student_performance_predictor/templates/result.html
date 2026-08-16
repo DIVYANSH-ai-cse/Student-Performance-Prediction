@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Prediction Result{% endblock %}
+
+{% block content %}
+<section class="card result-card">
+  <h1>Prediction Result</h1>
+  <p class="result-name">{{ student_name }}</p>
+
+  <div class="result-summary">
+    <div class="result-box score-box">
+      <span class="result-label">Predicted Score</span>
+      <span class="result-value">{{ score }}%</span>
+    </div>
+    <div class="result-box grade-box">
+      <span class="result-label">Grade</span>
+      <span class="result-value">{{ grade }}</span>
+    </div>
+    <div class="result-box status-box status-{{ status|lower }}">
+      <span class="result-label">Status</span>
+      <span class="result-value">{{ status }}</span>
+    </div>
+  </div>
+
+  <h2>Input Summary</h2>
+  <table class="result-table">
+    <tbody>
+      <tr><td>Daily Study Hours</td><td>{{ inputs.study_hours }}</td></tr>
+      <tr><td>Attendance</td><td>{{ inputs.attendance }}%</td></tr>
+      <tr><td>Previous Exam Score</td><td>{{ inputs.previous_scores }}%</td></tr>
+      <tr><td>Assignments Completed</td><td>{{ inputs.assignments_completed }}%</td></tr>
+      <tr><td>Average Sleep Hours</td><td>{{ inputs.sleep_hours }}</td></tr>
+      <tr><td>Extracurricular Activities</td><td>{{ "Yes" if inputs.extracurricular == 1 else "No" }}</td></tr>
+      <tr><td>Parental Support</td><td>
+        {% if inputs.parental_support == 2 %}High
+        {% elif inputs.parental_support == 1 %}Medium
+        {% else %}Low
+        {% endif %}
+      </td></tr>
+      <tr><td>Internet Access</td><td>{{ "Yes" if inputs.internet_access == 1 else "No" }}</td></tr>
+    </tbody>
+  </table>
+
+  <a href="{{ url_for('index') }}" class="btn-primary btn-back">Predict Another Student</a>
+</section>
+{% endblock %}

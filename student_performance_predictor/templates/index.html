@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Predict Performance{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <h1>Predict Student Academic Performance</h1>
+  <p>Enter a student's study habits and background details below. Our machine-learning model
+     (a Random Forest Regressor trained on academic data) will estimate their final score,
+     letter grade, and pass/fail outcome.</p>
+</section>
+
+<section class="card">
+  <form action="{{ url_for('predict') }}" method="POST" class="form-grid">
+
+    <div class="form-group full-width">
+      <label for="student_name">Student Name</label>
+      <input type="text" id="student_name" name="student_name" placeholder="e.g. Riya Sharma" required />
+    </div>
+
+    <div class="form-group">
+      <label for="study_hours">Daily Study Hours</label>
+      <input type="number" step="0.1" min="0" max="12" id="study_hours" name="study_hours" placeholder="e.g. 4.5" required />
+    </div>
+
+    <div class="form-group">
+      <label for="attendance">Attendance (%)</label>
+      <input type="number" step="0.1" min="0" max="100" id="attendance" name="attendance" placeholder="e.g. 85" required />
+    </div>
+
+    <div class="form-group">
+      <label for="previous_scores">Previous Exam Score (%)</label>
+      <input type="number" step="0.1" min="0" max="100" id="previous_scores" name="previous_scores" placeholder="e.g. 70" required />
+    </div>
+
+    <div class="form-group">
+      <label for="assignments_completed">Assignments Completed (%)</label>
+      <input type="number" step="0.1" min="0" max="100" id="assignments_completed" name="assignments_completed" placeholder="e.g. 90" required />
+    </div>
+
+    <div class="form-group">
+      <label for="sleep_hours">Average Sleep Hours</label>
+      <input type="number" step="0.1" min="0" max="12" id="sleep_hours" name="sleep_hours" placeholder="e.g. 7" required />
+    </div>
+
+    <div class="form-group">
+      <label for="parental_support">Parental Support Level</label>
+      <select id="parental_support" name="parental_support" required>
+        <option value="0">Low</option>
+        <option value="1" selected>Medium</option>
+        <option value="2">High</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="extracurricular">Participates in Extracurricular Activities?</label>
+      <select id="extracurricular" name="extracurricular" required>
+        <option value="yes">Yes</option>
+        <option value="no" selected>No</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="internet_access">Has Reliable Internet Access?</label>
+      <select id="internet_access" name="internet_access" required>
+        <option value="yes" selected>Yes</option>
+        <option value="no">No</option>
+      </select>
+    </div>
+
+    <div class="form-group full-width">
+      <button type="submit" class="btn-primary">Predict Performance</button>
+    </div>
+
+  </form>
+</section>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}About{% endblock %}
+
+{% block content %}
+<section class="card">
+  <h1>About This Project</h1>
+  <p>
+    The <strong>AI-Driven Student Performance Prediction System</strong> uses a
+    <strong>Random Forest Regression</strong> model trained with
+    <strong>scikit-learn</strong> to estimate a student's final academic score
+    based on measurable habits and background factors such as study hours,
+    attendance, previous scores, assignment completion, sleep, extracurricular
+    participation, parental support, and internet access.
+  </p>
+
+  <h2>Tech Stack</h2>
+  <ul class="about-list">
+    <li><strong>Backend:</strong> Python 3.14, Flask</li>
+    <li><strong>Machine Learning:</strong> scikit-learn (RandomForestRegressor), pandas, NumPy</li>
+    <li><strong>Frontend:</strong> HTML5, CSS3 (Jinja2 templates)</li>
+    <li><strong>Model Persistence:</strong> joblib</li>
+  </ul>
+
+  <h2>How It Works</h2>
+  <ol class="about-list">
+    <li>A synthetic dataset of student records is generated (<code>generate_dataset.py</code>).</li>
+    <li>Features are scaled and a Random Forest model is trained on 80% of the data
+        (<code>train_model.py</code>), and evaluated on the remaining 20%.</li>
+    <li>The trained model and scaler are saved to the <code>model/</code> folder.</li>
+    <li>The Flask app (<code>app.py</code>) loads the model and serves a form where
+        anyone can enter a student's details and instantly receive a predicted score,
+        letter grade, and pass/fail status.</li>
+  </ol>
+
+  <a href="{{ url_for('index') }}" class="btn-primary btn-back">Back to Predictor</a>
+</section>
+{% endblock %}
